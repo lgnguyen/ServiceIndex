@@ -1,0 +1,29 @@
+{
+  "name": "serviceindex",
+  "version": "1.0.0",
+  "description": "Repository for the ServiceIndex project",
+  "homepage": "https://github.com/lgnguyen/ServiceIndex#readme",
+  "bugs": {
+    "url": "https://github.com/lgnguyen/ServiceIndex/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lgnguyen/ServiceIndex.git"
+  },
+  "license": "ISC",
+  "author": "Lance Nguyen",
+  "type": "module",
+  "main": "src/server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node src/server.ts"
+  },
+  "dependencies": {
+    "eslint": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
