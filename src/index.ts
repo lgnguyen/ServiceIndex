@@ -1,33 +1,36 @@
-import app from './app';
-import sqlite3 from 'sqlite3';
+import "dotenv/config";
+import sqlite3 from "sqlite3";
+import { createApp } from "./app";
+import { Config, defaultLogger } from "./common";
 
-const PORT = Number(process.env.PORT) || 8000;
+const config = new Config();
+const logger = defaultLogger;
+const app = createApp({ logger });
 
 // Local database (kept for existing shutdown behavior)
-const DB_FILE_NAME = './database.db';
-const db = new sqlite3.Database(DB_FILE_NAME);
+const db = new sqlite3.Database(config.getDatabasePath());
 
-const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const server = app.listen(config.getPort(), () => {
+    logger.info({ port: config.getPort() }, "Server running");
 });
 
 const shutdown = (signal: string) => {
-  console.log(`${signal} signal received. Closing resources.\n`);
+    logger.info({ signal }, "Shutdown signal received, closing resources");
 
-  server.close(() => {
-    console.log('Http server closed.');
-  });
+    server.close(() => {
+        logger.info("Http server closed");
+    });
 
-  db.close();
-  console.log('SQLite DB closed.');
+    db.close();
+    logger.info("SQLite DB closed");
 
-  process.exit(0);
+    process.exit(0);
 };
 
-process.on('SIGTERM', () => {
-  shutdown('SIGTERM');
+process.on("SIGTERM", () => {
+    shutdown("SIGTERM");
 });
 
-process.on('SIGINT', () => {
-  shutdown('SIGINT');
+process.on("SIGINT", () => {
+    shutdown("SIGINT");
 });

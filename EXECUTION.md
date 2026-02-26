@@ -22,13 +22,13 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 **Goal:** Centralize environment reading; load the JWT secret for use in auth.
 
-- [ ] Create a **Config** class (e.g. under `src/config/` or `src/lib/`) that reads from `process.env`.
-- [ ] Read **SECRET_KEY** into this class (used later for JWT sign/verify). If missing in development, fail fast or throw a clear error when auth is used.
-- [ ] Optionally read **PORT**, **NODE_ENV**, and database path/URL if used.
-- [ ] Expose getters or readonly properties (e.g. `getSecretKey()`, `getPort()`) so the rest of the app does not touch `process.env` directly.
-- [ ] Ensure `.env` is in `.gitignore` and is not committed. Add a `.env.example` with `SECRET_KEY=` (and optionally `PORT=`) and a short comment that the secret can be generated with `openssl rand -hex 32`.
-- [ ] Add unit tests for this step (e.g. Config reads SECRET_KEY and getPort; behavior when SECRET_KEY is missing); keep coverage in mind.
-- [ ] **Verify:** Config class exists, reads `SECRET_KEY` from the environment, and can be instantiated or accessed without reading env elsewhere.
+- [x] Create a **Config** class (e.g. under `src/config/` or `src/lib/`) that reads from `process.env`.
+- [x] Read **SECRET_KEY** into this class (used later for JWT sign/verify). If missing in development, fail fast or throw a clear error when auth is used.
+- [x] Optionally read **PORT**, **NODE_ENV**, and database path/URL if used.
+- [x] Expose getters or readonly properties (e.g. `getSecretKey()`, `getPort()`) so the rest of the app does not touch `process.env` directly.
+- [x] Ensure `.env` is in `.gitignore` and is not committed. Add a `.env.example` with `SECRET_KEY=` (and optionally `PORT=`) and a short comment that the secret can be generated with `openssl rand -hex 32`.
+- [x] Add unit tests for this step (e.g. Config reads SECRET_KEY and getPort; behavior when SECRET_KEY is missing); keep coverage in mind.
+- [x ] **Verify:** Config class exists, reads `SECRET_KEY` from the environment, and can be instantiated or accessed without reading env elsewhere.
 
 ---
 
