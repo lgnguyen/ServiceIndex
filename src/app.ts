@@ -1,6 +1,7 @@
 import express from "express";
 import type { Request, Response } from "express";
 import type { Logger } from "./common";
+import apiRouter from "./routes";
 
 export interface CreateAppOptions {
   logger?: Logger;
@@ -27,6 +28,9 @@ export function createApp(opts: CreateAppOptions = {}): express.Express {
     app.get("/", (_req: Request, res: Response) => {
         res.status(200).json({ data: "Hello World!" });
     });
+
+    // API routes (users, vehicles, service records, alerts)
+    app.use("/", apiRouter);
 
     return app;
 }

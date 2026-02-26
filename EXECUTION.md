@@ -38,15 +38,15 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 ### Central routing file
 
-- [ ] Create one router module (e.g. `src/routes/index.ts` or `src/router.ts`) that imports Express router(s) or app and all handlers (or handler registrations).
-- [ ] Register every route listed in API.md (users, vehicles, service records, alerts) and map each to the corresponding handler; no business logic in the router—only route → handler wiring.
+- [x] Create one router module (e.g. `src/routes/index.ts` or `src/router.ts`) that imports Express router(s) or app and all handlers (or handler registrations).
+- [x] Register every route listed in API.md (users, vehicles, service records, alerts) and map each to the corresponding handler; no business logic in the router—only route → handler wiring.
 
 ### Handlers
 
-- [ ] Implement one handler function (or class method) per API endpoint. Handlers accept `req` and `res` (and optionally `next`).
+- [x] Implement one handler function (or class method) per API endpoint. Handlers accept `req` and `res` (and optionally `next`).
 - [ ] Handlers delegate input validation to the validator; if validation fails, respond with 400 (or 401 for auth failures) and do not call business logic.
-- [ ] Handlers call business logic (to be implemented in later steps) or return placeholder responses (e.g. 501 or minimal JSON) until those steps are done.
-- [ ] Handlers set correct HTTP status codes per API.md (200, 201, 400, 401, 404, 500) and return JSON.
+- [x] Handlers call business logic (to be implemented in later steps) or return placeholder responses (e.g. 501 or minimal JSON) until those steps are done.
+- [x] Handlers set correct HTTP status codes per API.md (200, 201, 400, 401, 404, 500) and return JSON.
 
 ### Base validator
 
