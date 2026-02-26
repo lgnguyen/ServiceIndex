@@ -20,7 +20,10 @@
     "app": "node src/index.ts"
   },
   "dependencies": {
+    "@sequelize/sqlite3": "^7.0.0-alpha.48",
+    "dotenv": "^17.3.1",
     "eslint": "^4.1.1",
+    "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {

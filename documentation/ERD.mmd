@@ -1,0 +1,58 @@
+erDiagram
+    USER ||--o{ VEHICLE : has
+    USER ||--o{ ALERT : has
+    VEHICLE ||--o{ SERVICE_RECORD : has
+    SERVICE_RECORD ||--o{ SERVICE_ITEM : related
+    MAKE ||--o{ MODEL : has
+    USER {
+        int id pk
+        string uuid
+        string userName
+        string location
+        date createdAt
+    }
+    VEHICLE {
+        int id pk
+        string uuid
+        int userId fk
+        string vehicleName
+        string makeName
+        string modelName
+        int year
+        date createdAt
+        date updatedAt
+        int mileage
+    }
+    SERVICE_RECORD {
+        int id pk
+        string uuid 
+        int vehicleId fk
+        int itemId fk
+        string serviceLocation
+        string productName
+        decimal cost
+        int interval
+        date serviceDate
+        int mileage
+    }
+    MAKE {
+        int id pk
+        string makeName
+        json metadata
+    }
+    MODEL {
+        int id pk
+        string modelName
+        json metadata
+    }
+    SERVICE_ITEM {
+        int id pk
+        string itemType
+        int recommendedInterval
+    }
+    ALERT {
+        int id pk
+        int userId fk
+        string message
+        boolean acknowledged
+    }
