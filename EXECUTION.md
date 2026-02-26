@@ -8,13 +8,13 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 **Goal:** Replace or wrap the current Node HTTP server with Express and have it listen on port 8000.
 
-- [ ] Add **Express** as a dependency.
-- [ ] Create an Express app that listens on **port 8000** (or `process.env.PORT` if set, default 8000).
-- [ ] Mount a simple health or root route (e.g. `GET /` or `GET /health`) that returns 200 so the server is demonstrably running.
-- [ ] Keep startup and graceful shutdown (e.g. SIGINT/SIGTERM) so the process exits cleanly.
-- [ ] Ensure the app entry point (e.g. `src/index.ts` or `src/app.ts`) runs this server.
-- [ ] Add unit tests for this step (e.g. server starts, health/root route returns 200); keep coverage in mind.
-- [ ] **Verify:** `curl http://localhost:8000` (or the health route) returns 200.
+- [x] Add **Express** as a dependency.
+- [x] Create an Express app that listens on **port 8000** (or `process.env.PORT` if set, default 8000).
+- [x] Mount a simple health or root route (e.g. `GET /` or `GET /health`) that returns 200 so the server is demonstrably running.
+- [x] Keep startup and graceful shutdown (e.g. SIGINT/SIGTERM) so the process exits cleanly.
+- [x] Ensure the app entry point (e.g. `src/index.ts` or `src/app.ts`) runs this server.
+- [x] Add unit tests for this step (e.g. server starts, health/root route returns 200); keep coverage in mind.
+- [x] **Verify:** `curl http://localhost:8000` (or the health route) returns 200. (verified by Lance)
 
 ---
 

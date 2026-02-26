@@ -1,38 +1,33 @@
-import http from 'node:http';
+import app from './app';
 import sqlite3 from 'sqlite3';
 
-// Create a local server to receive data from
-const server = http.createServer();
+const PORT = Number(process.env.PORT) || 8000;
 
-// Listen to the request event
-server.on('request', (request, res) => {
-   res.writeHead(200, { 'Content-Type': 'application/json' });
-   res.end(JSON.stringify({
-     data: 'Hello World!',
-   }));
-});
-
-const PORT = process.env.PORT || 8000;
-
-// Local database
-const DB_FILE_NAME = "./database.db"
+// Local database (kept for existing shutdown behavior)
+const DB_FILE_NAME = './database.db';
 const db = new sqlite3.Database(DB_FILE_NAME);
+
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 const shutdown = (signal: string) => {
   console.log(`${signal} signal received. Closing resources.\n`);
 
-  server.close();
-  console.log('Http server closed.');
+  server.close(() => {
+    console.log('Http server closed.');
+  });
 
   db.close();
-  console.log("SQLite DB closed.")
+  console.log('SQLite DB closed.');
 
   process.exit(0);
 };
 
-process.on('SIGTERM', () => { shutdown("SIGTERM") });
-process.on("SIGINT", () => { shutdown("SIGINT") });
+process.on('SIGTERM', () => {
+  shutdown('SIGTERM');
+});
 
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+process.on('SIGINT', () => {
+  shutdown('SIGINT');
 });

@@ -17,19 +17,24 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "app": "node src/index.ts"
+    "app": "ts-node src/index.ts"
   },
   "dependencies": {
     "@sequelize/sqlite3": "^7.0.0-alpha.48",
     "dotenv": "^17.3.1",
     "eslint": "^4.1.1",
+    "express": "^5.2.1",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.3.0",
+    "@types/supertest": "^7.2.0",
     "jest": "^30.2.0",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
