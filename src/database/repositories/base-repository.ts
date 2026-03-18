@@ -11,6 +11,10 @@ export class BaseRepository<T extends Model> {
         return this.model.findByPk(id);
     }
 
+    async listAll(): Promise<T[]> {
+        return this.model.findAll();
+    }
+
     async deleteById(id: number): Promise<boolean> {
         const deletedCount = await this.model.destroy({ where: { id } as any });
         return deletedCount > 0;

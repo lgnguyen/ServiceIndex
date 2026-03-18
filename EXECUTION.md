@@ -73,19 +73,19 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 **Goal:** Introduce Sequelize under a `database` subdirectory with models, a base repository, and one repository per entity; repositories must be injectable.
 
-- [ ] Put all ORM-related code under a subdirectory named **database** (e.g. `src/database/`).
-- [ ] Configure Sequelize to use SQLite (file path from config or env). Define **models** for: User, Vehicle, ServiceRecord, ServiceItem, Make, Model, Alert. Align model attributes with [documentation/ERD.mmd](documentation/ERD.mmd).
-- [ ] Create a **base/parent repository class** that holds shared behavior (e.g. generic findById, delete, or common error handling). Concrete repositories extend this base.
-- [ ] Implement **UserRepository** (extends base; encapsulates User CRUD).
-- [ ] Implement **VehicleRepository** (extends base; encapsulates Vehicle CRUD).
-- [ ] Implement **ServiceRecordRepository** (extends base; encapsulates ServiceRecord CRUD).
-- [ ] Implement **ServiceItemRepository** (extends base; encapsulates ServiceItem lookups).
-- [ ] Implement **MakeRepository** (extends base; encapsulates Make lookups).
-- [ ] Implement **ModelRepository** (extends base; encapsulates Model lookups).
-- [ ] Implement **AlertRepository** (extends base; encapsulates Alert CRUD).
-- [ ] Design repositories so any consumer receives them via **constructor injection** (no internal instantiation). Verify at least one consumer (e.g. test or script) can receive injected repositories.
-- [ ] Add unit tests for this step (e.g. Sequelize connects; each repository’s main methods—create, findById, list, update, delete—with test DB or mocks; injectability); keep coverage in mind.
-- [ ] **Verify:** Sequelize connects to SQLite; all models exist; base repository is used by concrete repos; all seven repository classes exist and are injectable.
+- [x] Put all ORM-related code under a subdirectory named **database** (e.g. `src/database/`).
+- [x] Configure Sequelize to use SQLite (file path from config or env). Define **models** for: User, Vehicle, ServiceRecord, ServiceItem, Make, Model, Alert. Align model attributes with [documentation/ERD.mmd](documentation/ERD.mmd).
+- [x] Create a **base/parent repository class** that holds shared behavior (e.g. generic findById, delete, or common error handling). Concrete repositories extend this base.
+- [x] Implement **UserRepository** (extends base; encapsulates User CRUD).
+- [x] Implement **VehicleRepository** (extends base; encapsulates Vehicle CRUD).
+- [x] Implement **ServiceRecordRepository** (extends base; encapsulates ServiceRecord CRUD).
+- [x] Implement **ServiceItemRepository** (extends base; encapsulates ServiceItem lookups).
+- [x] Implement **MakeRepository** (extends base; encapsulates Make lookups).
+- [x] Implement **ModelRepository** (extends base; encapsulates Model lookups).
+- [x] Implement **AlertRepository** (extends base; encapsulates Alert CRUD).
+- [x] Design repositories so any consumer receives them via **constructor injection** (no internal instantiation). Verify at least one consumer (e.g. test or script) can receive injected repositories.
+- [x] Add unit tests for this step (e.g. Sequelize connects; each repository’s main methods—create, findById, list, update, delete—with test DB or mocks; injectability); keep coverage in mind.
+- [x] **Verify:** Sequelize connects to SQLite; all models exist; base repository is used by concrete repos; all seven repository classes exist and are injectable.
 
 ---
 
