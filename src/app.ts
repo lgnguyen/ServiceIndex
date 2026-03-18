@@ -1,19 +1,23 @@
 import express from "express";
 import type { Request, Response } from "express";
 import type { Logger } from "./common";
-import apiRouter from "./routes";
+import type { AuthConfig } from "./routes/validators";
+import { createRouter } from "./routes";
 
 export interface CreateAppOptions {
   logger?: Logger;
+  /** Required for API routes that use JWT auth. */
+  config: AuthConfig;
 }
 
 /**
- * Create the Express app. Pass a logger to enable request logging and to have
- * it available for injection into handlers (e.g. via req.log or via DI).
+ * Create the Express app. Pass config (for validators/auth) and optionally a logger.
  */
-export function createApp(opts: CreateAppOptions = {}): express.Express {
+export function createApp(opts: CreateAppOptions): express.Express {
     const app = express();
-    const { logger } = opts;
+    const { logger, config } = opts;
+
+    app.use(express.json());
 
     if (logger) {
         addRequestLogging(app, logger);
@@ -29,8 +33,8 @@ export function createApp(opts: CreateAppOptions = {}): express.Express {
         res.status(200).json({ data: "Hello World!" });
     });
 
-    // API routes (users, vehicles, service records, alerts)
-    app.use("/", apiRouter);
+    // API routes (users, vehicles, service records, alerts) with validation middleware
+    app.use("/", createRouter(config));
 
     return app;
 }
@@ -62,5 +66,7 @@ function addRequestLogging(app: express.Express, logger: Logger) {
     });
 }
 
-/** Default app instance (no logger). Use createApp({ logger }) when you have a logger to inject. */
-export default createApp();
+/** Default app for tests: uses a test auth config. Use createApp({ config, logger }) in production. */
+export default createApp({
+    config: { getSecretKey: () => process.env.SECRET_KEY ?? "test-secret" },
+});

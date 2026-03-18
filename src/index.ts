@@ -5,7 +5,7 @@ import { Config, defaultLogger } from "./common";
 
 const config = new Config();
 const logger = defaultLogger;
-const app = createApp({ logger });
+const app = createApp({ logger, config });
 
 // Local database (kept for existing shutdown behavior)
 const db = new sqlite3.Database(config.getDatabasePath());

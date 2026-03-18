@@ -35,7 +35,10 @@ describe("Express app", () => {
 
         it("attaches a logger and logs requests when provided", async () => {
             const fakeLogger = new FakeLogger();
-            const appWithLogger = createApp({ logger: fakeLogger as unknown as Logger });
+            const appWithLogger = createApp({
+                logger: fakeLogger as unknown as Logger,
+                config: { getSecretKey: () => "test-secret" },
+            });
 
             const res = await request(appWithLogger).get("/health");
             expect(res.status).toBe(200);

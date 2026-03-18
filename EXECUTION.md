@@ -44,28 +44,28 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 ### Handlers
 
 - [x] Implement one handler function (or class method) per API endpoint. Handlers accept `req` and `res` (and optionally `next`).
-- [ ] Handlers delegate input validation to the validator; if validation fails, respond with 400 (or 401 for auth failures) and do not call business logic.
+- [x] Handlers delegate input validation to the validator; if validation fails, respond with 400 (or 401 for auth failures) and do not call business logic.
 - [x] Handlers call business logic (to be implemented in later steps) or return placeholder responses (e.g. 501 or minimal JSON) until those steps are done.
 - [x] Handlers set correct HTTP status codes per API.md (200, 201, 400, 401, 404, 500) and return JSON.
 
 ### Base validator
 
-- [ ] Create a **base validator** class/module that checks the request has a valid body when required (e.g. JSON, non-empty where needed).
-- [ ] Base validator performs **authentication** checks: extract and validate JWT (e.g. from `Authorization: Bearer <token>`), and attach the authenticated user id (or user entity) to the request so handlers can use it.
-- [ ] Base validator provides a common way to return validation errors (e.g. 400 for bad input, 401 for missing/invalid/expired token).
+- [x] Create a **base validator** class/module that checks the request has a valid body when required (e.g. JSON, non-empty where needed).
+- [x] Base validator performs **authentication** checks: extract and validate JWT (e.g. from `Authorization: Bearer <token>`), and attach the authenticated user id (or user entity) to the request so handlers can use it.
+- [x] Base validator provides a common way to return validation errors (e.g. 400 for bad input, 401 for missing/invalid/expired token).
 
 ### Per-route validators
 
-- [ ] Create a validator per handler that extends or composes the base validator and adds endpoint-specific checks (required fields for create user, create vehicle, create service record, create alert; path params like `vehicleId`, `serviceRecordId`, `alertId` present and well-formed).
+- [x] Create a validator per handler that extends or composes the base validator and adds endpoint-specific checks (required fields for create user, create vehicle, create service record, create alert; path params like `vehicleId`, `serviceRecordId`, `alertId` present and well-formed).
 
 ### Route coverage (from API.md)
 
-- [ ] **Users:** `POST /users`, `GET /users/:userId`
-- [ ] **Vehicles:** `POST /vehicles`, `GET /vehicles/:userId`, `GET /vehicles/:vehicleId`, `PUT /vehicles/:vehicleId`, `DELETE /vehicles/:vehicleId`
-- [ ] **Service records:** `POST /vehicles/:vehicleId/services`, `GET /vehicles/:vehicleId/services`, `GET /vehicles/:vehicleId/services/:serviceRecordId`, `PUT /vehicles/:vehicleId/services/:serviceRecordId`, `DELETE /vehicles/:vehicleId/services/:serviceRecordId`
-- [ ] **Alerts:** `POST /alerts`, `GET /alerts`, `GET /alerts/:alertId`, `PUT /alerts/:alertId`, `DELETE /alerts/:alertId`
-- [ ] Add unit tests for this step (e.g. route registration, base validator body/JWT checks, per-route validators; placeholder handler responses); keep coverage in mind.
-- [ ] **Verify:** All routes are registered and each returns a deterministic status/body (or placeholder). Invalid body or missing auth yields 400/401 via the validators; structure allows swapping in real business logic later.
+- [x] **Users:** `POST /users`, `GET /users/:userId`
+- [x] **Vehicles:** `POST /vehicles`, `GET /users/:userId/vehicles`, `GET /vehicles/:vehicleId`, `PUT /vehicles/:vehicleId`, `DELETE /vehicles/:vehicleId`
+- [x] **Service records:** `POST /vehicles/:vehicleId/services`, `GET /vehicles/:vehicleId/services`, `GET /vehicles/:vehicleId/services/:serviceRecordId`, `PUT /vehicles/:vehicleId/services/:serviceRecordId`, `DELETE /vehicles/:vehicleId/services/:serviceRecordId`
+- [x] **Alerts:** `POST /alerts`, `GET /alerts`, `GET /alerts/:alertId`, `PUT /alerts/:alertId`, `DELETE /alerts/:alertId`
+- [x] Add unit tests for this step (e.g. route registration, base validator body/JWT checks, per-route validators; placeholder handler responses); keep coverage in mind.
+- [x] **Verify:** All routes are registered and each returns a deterministic status/body (or placeholder). Invalid body or missing auth yields 400/401 via the validators; structure allows swapping in real business logic later.
 
 ---
 
