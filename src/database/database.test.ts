@@ -95,7 +95,7 @@ describe("database", () => {
             year: 2020,
             makeId: make.id,
             modelId: model.id,
-            vin: "1HGCM82633A004352",
+            vin: "TESTVIN0000000001",
             mileage: 12000,
         });
         const serviceRecord = await serviceRecordRepo.createServiceRecord({
@@ -181,7 +181,7 @@ describe("database", () => {
             year: 2015,
             makeId: extraMake.id,
             modelId: extraModel.id,
-            vin: "4T1BF1FK0FU123456",
+            vin: "TESTVIN0000000002",
             mileage: 45000,
         });
         const extraServiceRecord = await serviceRecordRepo.createServiceRecord({
