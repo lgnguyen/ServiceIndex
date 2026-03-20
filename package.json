@@ -18,7 +18,9 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "app": "tsx src/index.ts",
-    "lint": "eslint **/*.ts --fix"
+    "lint": "eslint **/*.ts --fix",
+    "db:migrate": "tsx src/database/migrate.ts",
+    "db:migrate:undo": "tsx src/database/migrate.ts --undo"
   },
   "dependencies": {
     "@sequelize/sqlite3": "^7.0.0-alpha.48",

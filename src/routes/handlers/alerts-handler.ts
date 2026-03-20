@@ -1,9 +1,20 @@
 import type { Request, Response } from "express";
+import type { AuthConfig } from "../validators";
+import type { AlertRepository } from "../../database/repositories";
 
 /** Placeholder until validators and business logic (Step 10). */
 const NOT_IMPLEMENTED = { message: "Not implemented" };
 
 export class AlertsHandler {
+    constructor(
+        private readonly deps?: {
+            config?: AuthConfig;
+            repositories?: {
+                alerts?: AlertRepository;
+            };
+        }
+    ) {}
+
     /** POST /alerts — create alert. Will delegate to validator then business logic. */
     createAlert(_req: Request, res: Response): void {
         res.status(501).json(NOT_IMPLEMENTED);

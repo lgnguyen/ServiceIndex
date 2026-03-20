@@ -1,13 +1,38 @@
 import { Router } from "express";
 import type { AuthConfig } from "./validators/base";
 import * as validators from "./validators";
-import * as handlers from "./handlers";
+import type { Handlers } from "./handlers";
+import { createHandlers } from "./handlers";
+import {
+    AlertRepository,
+    MakeRepository,
+    ModelRepository,
+    ServiceItemRepository,
+    ServiceRecordRepository,
+    UserRepository,
+    VehicleRepository,
+} from "../database/repositories";
 
 /**
  * Central API router. Registers every route from API.md as: validation middleware(s) then handler.
  * No business logic here—only route → middleware → handler wiring.
  */
-export function createRouter(config: AuthConfig): Router {
+function defaultHandlers(config: AuthConfig): Handlers {
+    return createHandlers({
+        config,
+        repositories: {
+            users: new UserRepository(),
+            vehicles: new VehicleRepository(),
+            serviceRecords: new ServiceRecordRepository(),
+            serviceItems: new ServiceItemRepository(),
+            makes: new MakeRepository(),
+            models: new ModelRepository(),
+            alerts: new AlertRepository(),
+        },
+    });
+}
+
+export function createRouter(config: AuthConfig, handlers: Handlers = defaultHandlers(config)): Router {
     const router = Router();
     const requireAuth = validators.createRequireAuth(config);
 

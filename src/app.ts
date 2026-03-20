@@ -1,13 +1,16 @@
 import express from "express";
 import type { Request, Response } from "express";
 import type { Logger } from "./common";
+import type { AppContainer } from "./container";
 import type { AuthConfig } from "./routes/validators";
 import { createRouter } from "./routes";
 
 export interface CreateAppOptions {
   logger?: Logger;
-  /** Required for API routes that use JWT auth. */
-  config: AuthConfig;
+  /** Optional pre-built dependency container (preferred for DI). */
+  container?: AppContainer;
+  /** Fallback auth config when container is not provided. */
+  config?: AuthConfig;
 }
 
 /**
@@ -15,7 +18,9 @@ export interface CreateAppOptions {
  */
 export function createApp(opts: CreateAppOptions): express.Express {
     const app = express();
-    const { logger, config } = opts;
+    const { logger } = opts;
+    const config = opts.container?.config ?? opts.config ?? { getSecretKey: () => "test-secret" };
+    const handlers = opts.container?.handlers;
 
     app.use(express.json());
 
@@ -34,7 +39,7 @@ export function createApp(opts: CreateAppOptions): express.Express {
     });
 
     // API routes (users, vehicles, service records, alerts) with validation middleware
-    app.use("/", createRouter(config));
+    app.use("/", createRouter(config, handlers));
 
     return app;
 }

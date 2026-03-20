@@ -12,7 +12,7 @@ export class ServiceItemRepository extends BaseRepository<ServiceItem> {
     }
 
     findByName(name: string): Promise<ServiceItem | null> {
-        return this.model.findOne({ where: { name } });
+        return this.model.findOne({ where: { itemType: name } });
     }
 
     listServiceItems(): Promise<ServiceItem[]> {

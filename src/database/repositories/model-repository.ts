@@ -16,7 +16,7 @@ export class ModelRepository extends BaseRepository<ModelEntity> {
     }
 
     findByNameAndMakeId(name: string, makeId: number): Promise<ModelEntity | null> {
-        return this.model.findOne({ where: { name, makeId } });
+        return this.model.findOne({ where: { modelName: name, makeId } });
     }
 }
 

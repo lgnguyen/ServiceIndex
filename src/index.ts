@@ -2,10 +2,12 @@ import "dotenv/config";
 import sqlite3 from "sqlite3";
 import { createApp } from "./app";
 import { Config, defaultLogger } from "./common";
+import { createAppContainer } from "./container";
 
 const config = new Config();
 const logger = defaultLogger;
-const app = createApp({ logger, config });
+const container = createAppContainer(config);
+const app = createApp({ logger, container });
 
 // Local database (kept for existing shutdown behavior)
 const db = new sqlite3.Database(config.getDatabasePath());

@@ -1,9 +1,20 @@
 import type { Request, Response } from "express";
+import type { AuthConfig } from "../validators";
+import type { ServiceRecordRepository } from "../../database/repositories";
 
 /** Placeholder until validators and business logic (Step 9). */
 const NOT_IMPLEMENTED = { message: "Not implemented" };
 
 export class ServiceRecordsHandler {
+    constructor(
+        private readonly deps?: {
+            config?: AuthConfig;
+            repositories?: {
+                serviceRecords?: ServiceRecordRepository;
+            };
+        }
+    ) {}
+
     /** POST /vehicles/:vehicleId/services — create service record. Will delegate to validator then business logic. */
     createServiceRecord(_req: Request, res: Response): void {
         res.status(501).json(NOT_IMPLEMENTED);

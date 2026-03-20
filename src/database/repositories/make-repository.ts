@@ -12,7 +12,7 @@ export class MakeRepository extends BaseRepository<Make> {
     }
 
     findByName(name: string): Promise<Make | null> {
-        return this.model.findOne({ where: { name } });
+        return this.model.findOne({ where: { makeName: name } });
     }
 
     listMakes(): Promise<Make[]> {

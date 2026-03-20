@@ -73,13 +73,21 @@ describe("database", () => {
         const modelRepo = new ModelRepository(ModelEntity);
         const alertRepo = new AlertRepository(Alert);
 
-        const make = await makeRepo.createMake({ name: "Honda" });
-        const model = await modelRepo.createModel({ makeId: make.id, name: "Civic" });
-        const serviceItem = await serviceItemRepo.createServiceItem({ name: "Oil Change" });
+        const make = await makeRepo.createMake({ makeName: "Honda", metadata: { country: "Japan" } });
+        const model = await modelRepo.createModel({
+            makeId: make.id,
+            modelName: "Civic",
+            metadata: { segment: "Sedan" },
+        });
+        const serviceItem = await serviceItemRepo.createServiceItem({
+            itemType: "Oil Change",
+            recommendedInterval: 5000,
+        });
         const user = await userRepo.createUser({
             email: "alice@example.com",
             passwordHash: "hashed-password",
             name: "Alice",
+            location: "Seattle",
         });
         const vehicle = await vehicleRepo.createVehicle({
             userId: user.id,
@@ -87,6 +95,8 @@ describe("database", () => {
             year: 2020,
             makeId: make.id,
             modelId: model.id,
+            vin: "1HGCM82633A004352",
+            mileage: 12000,
         });
         const serviceRecord = await serviceRecordRepo.createServiceRecord({
             vehicleId: vehicle.id,
@@ -94,6 +104,10 @@ describe("database", () => {
             performedAt: new Date("2026-01-01T00:00:00.000Z"),
             odometer: 12000,
             notes: "Initial service",
+            serviceLocation: "Downtown Garage",
+            productName: "Synthetic Oil",
+            cost: 79.99,
+            interval: 5000,
         });
         const alert = await alertRepo.createAlert({
             userId: user.id,
@@ -101,6 +115,8 @@ describe("database", () => {
             serviceItemId: serviceItem.id,
             dueDate: new Date("2026-06-01T00:00:00.000Z"),
             status: "open",
+            message: "Oil change due soon",
+            acknowledged: false,
         });
 
         expect((await userRepo.findByEmail("alice@example.com"))?.id).toBe(user.id);
@@ -124,27 +140,40 @@ describe("database", () => {
         expect(updatedServiceRecord?.notes).toBe("Updated service note");
 
         expect((await serviceItemRepo.findByName("Oil Change"))?.id).toBe(serviceItem.id);
-        expect((await serviceItemRepo.listServiceItems()).map((item) => item.name)).toEqual([
+        expect((await serviceItemRepo.listServiceItems()).map((item) => item.itemType)).toEqual([
             "Oil Change",
         ]);
 
         expect((await makeRepo.findByName("Honda"))?.id).toBe(make.id);
-        expect((await makeRepo.listMakes()).map((item) => item.name)).toEqual(["Honda"]);
+        expect((await makeRepo.listMakes()).map((item) => item.makeName)).toEqual(["Honda"]);
 
         expect((await modelRepo.findByNameAndMakeId("Civic", make.id))?.id).toBe(model.id);
-        expect((await modelRepo.listByMakeId(make.id)).map((item) => item.name)).toEqual(["Civic"]);
+        expect((await modelRepo.listByMakeId(make.id)).map((item) => item.modelName)).toEqual([
+            "Civic",
+        ]);
 
         expect((await alertRepo.listByUserId(user.id)).map((item) => item.id)).toEqual([alert.id]);
         const updatedAlert = await alertRepo.updateAlert(alert.id, { status: "dismissed" });
         expect(updatedAlert?.status).toBe("dismissed");
 
-        const extraMake = await makeRepo.createMake({ name: "Toyota" });
-        const extraModel = await modelRepo.createModel({ makeId: extraMake.id, name: "Camry" });
-        const extraServiceItem = await serviceItemRepo.createServiceItem({ name: "Brake Service" });
+        const extraMake = await makeRepo.createMake({
+            makeName: "Toyota",
+            metadata: { country: "Japan" },
+        });
+        const extraModel = await modelRepo.createModel({
+            makeId: extraMake.id,
+            modelName: "Camry",
+            metadata: { segment: "Sedan" },
+        });
+        const extraServiceItem = await serviceItemRepo.createServiceItem({
+            itemType: "Brake Service",
+            recommendedInterval: 12000,
+        });
         const extraUser = await userRepo.createUser({
             email: "bob@example.com",
             passwordHash: "other-password",
             name: "Bob",
+            location: "Portland",
         });
         const extraVehicle = await vehicleRepo.createVehicle({
             userId: extraUser.id,
@@ -152,6 +181,8 @@ describe("database", () => {
             year: 2015,
             makeId: extraMake.id,
             modelId: extraModel.id,
+            vin: "4T1BF1FK0FU123456",
+            mileage: 45000,
         });
         const extraServiceRecord = await serviceRecordRepo.createServiceRecord({
             vehicleId: extraVehicle.id,
@@ -159,6 +190,10 @@ describe("database", () => {
             performedAt: new Date("2026-02-01T00:00:00.000Z"),
             odometer: 45000,
             notes: "Secondary service",
+            serviceLocation: "North Shop",
+            productName: "Brake Pads",
+            cost: 299.99,
+            interval: 12000,
         });
         const extraAlert = await alertRepo.createAlert({
             userId: extraUser.id,
@@ -166,6 +201,8 @@ describe("database", () => {
             serviceItemId: extraServiceItem.id,
             dueDate: new Date("2026-08-01T00:00:00.000Z"),
             status: "open",
+            message: "Brake inspection reminder",
+            acknowledged: false,
         });
 
         await expect(alertRepo.deleteById(extraAlert.id)).resolves.toBe(true);
@@ -204,6 +241,8 @@ describe("database", () => {
             year: 2024,
             makeId: null,
             modelId: null,
+            vin: null,
+            mileage: null,
         });
 
         expect(consumer.users).toBe(userRepo);

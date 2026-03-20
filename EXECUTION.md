@@ -93,14 +93,14 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 **Goal:** Use Sequelize migrations to create the full schema (all tables) and populate **Make**, **Model**, and **Service Item** as reference data. No API creates these; they are reference data. This step runs **before** DI and business logic so that vehicle, service record, and alert APIs can validate makeId/modelId/serviceItemId.
 
-- [ ] Add Sequelize CLI (or migration runner) if not already present. Ensure migrations live under the database area (e.g. `src/database/migrations/` or project root `migrations/` per Sequelize convention).
-- [ ] Create initial migration(s) that create **all tables** (User, Vehicle, ServiceRecord, Alert, Make, Model, Service Item) per [documentation/ERD.mmd](documentation/ERD.mmd) so that the app can persist data from Step 7 onward.
-- [ ] Create migration(s) that create **Make** table (id, makeName, metadata, etc. per ERD) if not in initial schema.
-- [ ] Create migration(s) that create **Model** table (id, modelName, makeId or equivalent, metadata, etc. per ERD) if not in initial schema.
-- [ ] Create migration(s) that create **Service Item** table (id, itemType, recommendedInterval, etc. per ERD). Add foreign keys and indexes as needed.
-- [ ] Add seed/reference data (in a migration or separate seed): populate **Make**, **Model**, and **Service Item** with a minimal set (e.g. a few makes, a few models, and service types from README: oil change, cabin air filter, tire rotation/balance/alignment, tire life, brakes, fluids, spark plugs, coil packs, clutch, battery, wipers). Document that more migrations or seeds can be run later for updates.
-- [ ] Add unit tests for this step (e.g. migrations run successfully; schema and seed data are applied; optional: assert reference rows exist); keep coverage in mind.
-- [ ] **Verify:** Running migrations creates/updates the schema and populates Make, Model, and Service Item. Vehicle and service record creation can resolve makeId, modelId, and serviceItemId against these tables.
+- [x] Add Sequelize CLI (or migration runner) if not already present. Ensure migrations live under the database area (e.g. `src/database/migrations/` or project root `migrations/` per Sequelize convention).
+- [x] Create initial migration(s) that create **all tables** (User, Vehicle, ServiceRecord, Alert, Make, Model, Service Item) per [documentation/ERD.mmd](documentation/ERD.mmd) so that the app can persist data from Step 7 onward.
+- [x] Create migration(s) that create **Make** table (id, makeName, metadata, etc. per ERD) if not in initial schema.
+- [x] Create migration(s) that create **Model** table (id, modelName, makeId or equivalent, metadata, etc. per ERD) if not in initial schema.
+- [x] Create migration(s) that create **Service Item** table (id, itemType, recommendedInterval, etc. per ERD). Add foreign keys and indexes as needed.
+- [x] Add seed/reference data (in a migration or separate seed): populate **Make**, **Model**, and **Service Item** with a minimal set (e.g. a few makes, a few models, and service types from README: oil change, cabin air filter, tire rotation/balance/alignment, tire life, brakes, fluids, spark plugs, coil packs, clutch, battery, wipers). Document that more migrations or seeds can be run later for updates.
+- [x] Add unit tests for this step (e.g. migrations run successfully; schema and seed data are applied; optional: assert reference rows exist); keep coverage in mind.
+- [x] **Verify:** Running migrations creates/updates the schema and populates Make, Model, and Service Item. Vehicle and service record creation can resolve makeId, modelId, and serviceItemId against these tables.
 
 ---
 
@@ -108,13 +108,13 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 **Goal:** Use a DI approach so that Config and the ORM/repositories are injected into handlers or services rather than imported as globals. **Requires:** Config (Step 2), repositories (Step 4), and handlers/routes (Step 3) to exist so they can be wired.
 
-- [ ] Introduce a **container** or **factory** (class-based or function-based) that instantiates **Config** once.
-- [ ] Container instantiates or obtains the **Sequelize** connection and all **repository** classes (User, Vehicle, ServiceRecord, ServiceItem, Make, Model, Alert), passing shared dependencies (e.g. sequelize instance) where needed.
-- [ ] Container provides a way to obtain **handlers** (or **services**) that receive these repositories and Config via constructor injection.
-- [ ] Wire the Express app so that when a route is hit, the handler (or service) used is the one from the container, not a new ad-hoc instance that creates its own dependencies.
-- [ ] Handlers (or a thin service layer) receive at least **Config** and the **repositories** they need; validators may receive Config (for JWT verification) and optionally repositories.
-- [ ] Add unit tests for this step (e.g. container resolves Config and repos; handlers receive injected deps; app starts and routes respond); keep coverage in mind.
-- [ ] **Verify:** No handler or service directly instantiates Config or repositories; they are supplied by the container/factory. App starts and routes respond (even with placeholder logic).
+- [x] Introduce a **container** or **factory** (class-based or function-based) that instantiates **Config** once.
+- [x] Container instantiates or obtains the **Sequelize** connection and all **repository** classes (User, Vehicle, ServiceRecord, ServiceItem, Make, Model, Alert), passing shared dependencies (e.g. sequelize instance) where needed.
+- [x] Container provides a way to obtain **handlers** (or **services**) that receive these repositories and Config via constructor injection.
+- [x] Wire the Express app so that when a route is hit, the handler (or service) used is the one from the container, not a new ad-hoc instance that creates its own dependencies.
+- [x] Handlers (or a thin service layer) receive at least **Config** and the **repositories** they need; validators may receive Config (for JWT verification) and optionally repositories.
+- [x] Add unit tests for this step (e.g. container resolves Config and repos; handlers receive injected deps; app starts and routes respond); keep coverage in mind.
+- [x] **Verify:** No handler or service directly instantiates Config or repositories; they are supplied by the container/factory. App starts and routes respond (even with placeholder logic).
 
 ---
 
@@ -122,12 +122,12 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 **Goal:** Implement the behavior and validation required for user-related endpoints per API.md.
 
-- [ ] **POST /users:** Validate body (email format, password presence/strength, name if required). Return 400 on failure.
-- [ ] **POST /users:** Hash password (e.g. bcrypt) before storing; do not store plaintext. Persist user via UserRepository; return 201 with created user (exclude password hash from response). On duplicate email return 400 or 409. Return 500 on unexpected errors.
-- [ ] **GET /users/:userId:** Require valid JWT; extract user id from token. Return 401 if missing or invalid. Ensure requested `userId` matches JWT subject; if not, return 401. Load user by id via UserRepository; if not found return 404. Return 200 with user profile (no sensitive fields). Return 500 on unexpected errors.
-- [ ] Ensure validators for these routes enforce auth and body/param rules; handlers delegate to this business logic.
-- [ ] Add unit tests for this step (e.g. create user returns 201 and excludes password; get user requires JWT and enforces ownership; 400/401/404/500 cases); keep coverage in mind.
-- [ ] **Verify:** Create user and get current user behave per API.md (status codes and response shape). Passwords are hashed; JWT required for get current user; ownership enforced.
+- [x] **POST /users:** Validate body (email format, password presence/strength, name if required). Return 400 on failure.
+- [x] **POST /users:** Hash password (e.g. bcrypt) before storing; do not store plaintext. Persist user via UserRepository; return 201 with created user (exclude password hash from response). On duplicate email return 400 or 409. Return 500 on unexpected errors.
+- [x] **GET /users/:userId:** Require valid JWT; extract user id from token. Return 401 if missing or invalid. Ensure requested `userId` matches JWT subject; if not, return 401. Load user by id via UserRepository; if not found return 404. Return 200 with user profile (no sensitive fields). Return 500 on unexpected errors.
+- [x] Ensure validators for these routes enforce auth and body/param rules; handlers delegate to this business logic.
+- [x] Add unit tests for this step (e.g. create user returns 201 and excludes password; get user requires JWT and enforces ownership; 400/401/404/500 cases); keep coverage in mind.
+- [x] **Verify:** Create user and get current user behave per API.md (status codes and response shape). Passwords are hashed; JWT required for get current user; ownership enforced.
 
 ---
 
