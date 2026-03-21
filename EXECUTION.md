@@ -149,13 +149,13 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 **Goal:** Implement the behavior and validation required for service record endpoints per API.md.
 
-- [ ] **POST /vehicles/:vehicleId/services:** Validate body (serviceItemId, performedAt, odometer, notes, etc.). Require JWT; ensure vehicle exists and belongs to authenticated user; ensure serviceItemId exists. Create service record linked to vehicle; return 201. 400/401/404/500 per API.md.
-- [ ] **GET /vehicles/:vehicleId/services:** Require JWT; ensure vehicle exists and belongs to user. List service records for that vehicle (paginated per API.md if specified). Return 200 with array. 401/404/500 per API.md.
-- [ ] **GET /vehicles/:vehicleId/services/:serviceRecordId:** Require JWT; ensure vehicle ownership and record exists for that vehicle. Return 200 with record. 401/404/500 per API.md.
-- [ ] **PUT /vehicles/:vehicleId/services/:serviceRecordId:** Require JWT; validate body. Ensure vehicle ownership and record exists. Update record; return 200 with updated record. 400/401/404/500 per API.md.
-- [ ] **DELETE /vehicles/:vehicleId/services/:serviceRecordId:** Require JWT; ensure vehicle ownership and record exists. Delete record; return 200. 401/404/500 per API.md.
-- [ ] Add unit tests for this step (e.g. service record CRUD and list; vehicle ownership and serviceItemId validation; 400/401/404/500 cases); keep coverage in mind.
-- [ ] **Verify:** All service record endpoints behave per API.md; vehicle ownership and record existence are enforced.
+- [x] **POST /vehicles/:vehicleId/services:** Validate body (serviceItemId, performedAt, odometer, notes, etc.). Require JWT; ensure vehicle exists and belongs to authenticated user; ensure serviceItemId exists. Create service record linked to vehicle; return 201. 400/401/404/500 per API.md.
+- [x] **GET /vehicles/:vehicleId/services:** Require JWT; ensure vehicle exists and belongs to user. List service records for that vehicle (paginated per API.md if specified). Return 200 with array. 401/404/500 per API.md.
+- [x] **GET /vehicles/:vehicleId/services/:serviceRecordId:** Require JWT; ensure vehicle ownership and record exists for that vehicle. Return 200 with record. 401/404/500 per API.md.
+- [x] **PUT /vehicles/:vehicleId/services/:serviceRecordId:** Require JWT; validate body. Ensure vehicle ownership and record exists. Update record; return 200 with updated record. 400/401/404/500 per API.md.
+- [x] **DELETE /vehicles/:vehicleId/services/:serviceRecordId:** Require JWT; ensure vehicle ownership and record exists. Delete record; return 200. 401/404/500 per API.md.
+- [x] Add unit tests for this step (e.g. service record CRUD and list; vehicle ownership and serviceItemId validation; 400/401/404/500 cases); keep coverage in mind.
+- [x] **Verify:** All service record endpoints behave per API.md; vehicle ownership and record existence are enforced.
 
 ---
 

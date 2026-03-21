@@ -187,6 +187,7 @@ Service records are always scoped to a vehicle that belongs to the authenticated
 
 - **Method**: `GET /vehicles/:vehicleId/services`
 - **Description**: List all service records for a given vehicle belonging to the user. There shouldn't be more than 100's service records, but API will be paginated to cover the possibility.
+- **Query (optional)**: `limit` (default 50, max 100), `offset` (default 0). Invalid values return **400**.
 - **Responses**:
   - **200 OK**
     - Body: array of service records for the vehicle.

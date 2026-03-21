@@ -69,7 +69,11 @@ export function createHandlers(deps: HandlerDependencies): Handlers {
     });
     const serviceRecordsHandlers = new ServiceRecordsHandler({
         config: deps.config,
-        repositories: { serviceRecords: deps.repositories.serviceRecords },
+        repositories: {
+            serviceRecords: deps.repositories.serviceRecords,
+            vehicles: deps.repositories.vehicles,
+            serviceItems: deps.repositories.serviceItems,
+        },
     });
     const alertsHandlers = new AlertsHandler({
         config: deps.config,

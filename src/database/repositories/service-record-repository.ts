@@ -15,6 +15,22 @@ export class ServiceRecordRepository extends BaseRepository<ServiceRecord> {
         return this.model.findAll({ where: { vehicleId } });
     }
 
+    /** Ordered newest-first; optional pagination for list endpoint. */
+    listByVehicleIdPaginated(
+        vehicleId: number,
+        opts: { limit: number; offset: number }
+    ): Promise<ServiceRecord[]> {
+        return this.model.findAll({
+            where: { vehicleId },
+            order: [
+                ["performedAt", "DESC"],
+                ["id", "DESC"],
+            ],
+            limit: opts.limit,
+            offset: opts.offset,
+        });
+    }
+
     async updateServiceRecord(
         id: number,
         attrs: Partial<CreationAttributes<ServiceRecord>>
