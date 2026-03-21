@@ -280,6 +280,7 @@ Alerts indicate upcoming or overdue services for a user’s vehicles.
 
 - **Method**: `GET /alerts`
 - **Description**: List all alerts for the authenticated user (optionally filter by status, vehicle, etc.). API will be paginated to cover large volume of alerts per user.
+- **Query (optional)**: `limit` (default 50, max 100), `offset` (default 0), `status` (exact match), `vehicleId` (must be a vehicle owned by the user; invalid or non-owned returns **401**/**404** as appropriate). Invalid `limit`/`offset` returns **400**.
 - **Responses**:
   - **200 OK**
     - Body: array of alerts for the user.

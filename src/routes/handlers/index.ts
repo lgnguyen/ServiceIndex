@@ -77,7 +77,11 @@ export function createHandlers(deps: HandlerDependencies): Handlers {
     });
     const alertsHandlers = new AlertsHandler({
         config: deps.config,
-        repositories: { alerts: deps.repositories.alerts },
+        repositories: {
+            alerts: deps.repositories.alerts,
+            vehicles: deps.repositories.vehicles,
+            serviceItems: deps.repositories.serviceItems,
+        },
     });
 
     return {

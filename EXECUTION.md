@@ -163,13 +163,13 @@ This document is an outlined set of tasks for an agentic AI to read and execute 
 
 **Goal:** Implement the behavior and validation required for alert endpoints per API.md.
 
-- [ ] **POST /alerts:** Validate body (vehicleId, serviceItemId, dueDate, status, etc.). Require JWT; ensure vehicle exists and belongs to authenticated user; ensure serviceItemId exists. Create alert for user; return 201. 400/401/404/500 per API.md.
-- [ ] **GET /alerts:** Require JWT. List alerts for authenticated user (paginated per API.md if specified). Return 200 with array. 401/500 per API.md.
-- [ ] **GET /alerts/:alertId:** Require JWT; load alert; ensure it belongs to authenticated user. Return 200 with alert, 401/404/500 per API.md.
-- [ ] **PUT /alerts/:alertId:** Require JWT; validate body. Load alert; ensure ownership. Update (e.g. acknowledge, due date); return 200 with updated alert. 400/401/404/500 per API.md.
-- [ ] **DELETE /alerts/:alertId:** Require JWT; ensure alert belongs to user. Delete alert; return 200. 401/404/500 per API.md.
-- [ ] Add unit tests for this step (e.g. alert CRUD and list; ownership and vehicleId/serviceItemId validation; 400/401/404/500 cases); keep coverage in mind.
-- [ ] **Verify:** All alert endpoints behave per API.md; ownership and existence checks enforced.
+- [x] **POST /alerts:** Validate body (vehicleId, serviceItemId, dueDate, status, etc.). Require JWT; ensure vehicle exists and belongs to authenticated user; ensure serviceItemId exists. Create alert for user; return 201. 400/401/404/500 per API.md.
+- [x] **GET /alerts:** Require JWT. List alerts for authenticated user (paginated per API.md if specified). Return 200 with array. 401/500 per API.md.
+- [x] **GET /alerts/:alertId:** Require JWT; load alert; ensure it belongs to authenticated user. Return 200 with alert, 401/404/500 per API.md.
+- [x] **PUT /alerts/:alertId:** Require JWT; validate body. Load alert; ensure ownership. Update (e.g. acknowledge, due date); return 200 with updated alert. 400/401/404/500 per API.md.
+- [x] **DELETE /alerts/:alertId:** Require JWT; ensure alert belongs to user. Delete alert; return 200. 401/404/500 per API.md.
+- [x] Add unit tests for this step (e.g. alert CRUD and list; ownership and vehicleId/serviceItemId validation; 400/401/404/500 cases); keep coverage in mind.
+- [x] **Verify:** All alert endpoints behave per API.md; ownership and existence checks enforced.
 
 ---
 
