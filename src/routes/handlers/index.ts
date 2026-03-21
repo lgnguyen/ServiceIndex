@@ -61,7 +61,11 @@ export function createHandlers(deps: HandlerDependencies): Handlers {
     });
     const vehiclesHandlers = new VehiclesHandler({
         config: deps.config,
-        repositories: { vehicles: deps.repositories.vehicles },
+        repositories: {
+            vehicles: deps.repositories.vehicles,
+            makes: deps.repositories.makes,
+            models: deps.repositories.models,
+        },
     });
     const serviceRecordsHandlers = new ServiceRecordsHandler({
         config: deps.config,

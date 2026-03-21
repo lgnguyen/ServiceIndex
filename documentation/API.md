@@ -95,8 +95,8 @@ For the examples below, assume the backend derives the current `userId` from the
 
 ### List Vehicles
 
-- **Method**: `GET /vehicles/:userId`
-- **Description**: List all vehicles belonging to the authenticated user.
+- **Method**: `GET /users/:userId/vehicles`
+- **Description**: List all vehicles belonging to the authenticated user. (Nested under the user resource so this does not collide with `GET /vehicles/:vehicleId` for a single vehicle.)
 - **Responses**:
   - **200 OK**
     - Body: array of vehicles for the authenticated user (empty array if none).
